@@ -1,0 +1,51 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    [
+      "babel-plugin-styled-components", {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "actions": "./src/actions",
+          "components": "./src/components",
+          "config": "./src/config",
+          "constants": "./src/constants",
+          "container": "./src/container",
+          "pages": "./src/pages",
+          "routers": "./src/routers",
+          "services": "./src/services",
+          "static": "./src/public/static",
+          "store": "./src/store",
+          "templates": "./src/templates",
+          "theme": "./src/theme",
+          "utils": "./src/utils",
+          "cache": "./src/cache"
+        }
+      }
+    ]
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        [
+          "babel-plugin-styled-components",  {
+            "ssr": true,
+            "displayName": true,
+            "preprocess": false
+          }
+        ]
+      ]
+    }
+  }
+}
