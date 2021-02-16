@@ -7,7 +7,6 @@ const User = () => {
     <Layout>
       <Head>
         <title>Halaman User</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
         Ini Halaman User
