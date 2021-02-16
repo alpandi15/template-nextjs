@@ -3,13 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "cross-env NODE_ENV=development nodemon -w server.js -r esm server.js",
+    "build": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 next build ./src",
     "start": "next start"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "lru-cache": "^6.0.0",
     "next": "10.0.7",
+    "next-workbox-webpack-plugin": "^2.1.1",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-helmet": "^6.1.0",
+    "webpack-pwa-manifest": "^4.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7"
   }
 }
