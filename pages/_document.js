@@ -17,7 +17,9 @@ class MyDocument extends Document {
   }
 
   static contextTypes () {
-    PropTypes.object
+    return {
+      helmet: PropTypes.object
+    }
   }
 
   // should render on <html>
