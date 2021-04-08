@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import { Component } from 'react'
 import Router from 'next/router'
 import nextCookie from 'next-cookies'
@@ -40,7 +41,7 @@ export const logout = (guard) => {
   }
 }
 
-const getDisplayName = Component => Component.displayName || Component.name || 'Component'
+const getDisplayName = (Component) => Component.displayName || Component.name || 'Component'
 
 export const auth = (ctx, guard) => {
   const tokenData = nextCookie(ctx)
@@ -111,7 +112,7 @@ export const auth = (ctx, guard) => {
   return token
 }
 
-export const withAuthSync = WrappedComponent => class extends Component {
+export const withAuthSync = (WrappedComponent) => class extends Component {
   static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`
 
   static async getInitialProps (ctx) {
@@ -193,7 +194,7 @@ export const isLogged = (ctx, guard) => {
   return token
 }
 
-export const loggedChecked = WrappedComponent => class extends Component {
+export const loggedChecked = (WrappedComponent) => class extends Component {
   static displayName = `loggedChecked(${getDisplayName(WrappedComponent)})`
 
   static async getInitialProps (ctx) {

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import Router from 'next/router'
-import { Icon } from 'react-materialize'
 import color from '../../theme/color'
 
 const styles = {
@@ -87,7 +86,7 @@ const Header = ({
               style={textStyle}
               onClick={goBack}
             >
-              <Icon>arrow_back</Icon>
+              <i className="material-icons">arrow_back</i>
             </div>
             {
               children || (!transparent && title ? (
