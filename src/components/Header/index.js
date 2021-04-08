@@ -26,18 +26,9 @@ const styles = {
     color: color.white
   },
   titleStyle: {
-    color: '#000000de',
-    backgroundColor: color.white,
-    borderRadius: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    height: '45px',
-    marginRight: '.5rem',
-    textTransform: 'uppercase',
-    paddingTop: '1px',
     marginLeft: '10px',
-    fontWeight: '600'
+    fontWeight: '600',
+    fontSize: '15px'
   }
 }
 
@@ -88,11 +79,13 @@ const Header = ({
             >
               <i className="material-icons">arrow_back</i>
             </div>
-            {
-              children || (!transparent && title ? (
-                <span style={{ ...styles.titleStyle, ...titleStyle }}>{title}</span>
-              ) : null)
-            }
+            <div className="title-header">
+              {
+                children || (!transparent && title ? (
+                  <div style={{ ...styles.titleStyle, ...titleStyle }}>{title}</div>
+                ) : null)
+              }
+            </div>
           </div>
         </div>
       </nav>

@@ -1,9 +1,6 @@
 import cookie from 'js-cookie'
 import { remove, getAccessToken } from 'services/utils/storage'
 import { loggedin } from 'components/Security/auth'
-import { removeUsedVoucher } from 'services/useVoucher/useVoucherService'
-import { removeCart } from 'services/cart/cartService'
-import { removeOrderStorage } from 'services/order/manualService'
 import {
   apiRegister,
   apiLogin,
@@ -16,8 +13,6 @@ import {
   FAILED_AUTH,
   FETCH_LOGOUT_USER
 } from '../types'
-import { FOODCOURT_SELECTED } from '../../constants'
-import firebase from '../../services/utils/firebase'
 
 const fetch = () => {
   return { type: FETCH_AUTH }
@@ -56,7 +51,7 @@ const failed = (error) => {
 }
 
 // Register User
-const registerUser = data => async (dispatch) => {
+const registerUser = (data) => async (dispatch) => {
   try {
     dispatch(fetch())
     const response = await apiRegister(data)
@@ -83,8 +78,6 @@ const loginUser = (data, guard = 'user', path) => async (dispatch) => {
     if (response && response.success) {
       dispatch(receive(response.data, path, guard))
       if (response && response.data) {
-        await removeCart()
-        await removeOrderStorage()
         return response
       }
     } else {
@@ -106,8 +99,6 @@ const loginGuest = (data, guard = 'user', path) => async (dispatch) => {
       const response = await apiGetProfile(guard)
       if (response.success) {
         dispatch(receivedAuthMe(response.data))
-        await removeCart()
-        await removeOrderStorage()
         return response
       }
       dispatch(failed(response))
@@ -130,17 +121,10 @@ const loginGuest = (data, guard = 'user', path) => async (dispatch) => {
 }
 
 // Logout
-const logoutUser = guard => async (dispatch) => {
+const logoutUser = (guard) => async (dispatch) => {
   await remove(`access_token_${guard}`)
   cookie.remove(`access_token_${guard}`)
   await remove(`refresh_token_${guard}`)
-  await removeUsedVoucher()
-  await removeCart()
-  await removeOrderStorage()
-  firebase.auth().signOut().then(e => console.log('FIREBASE SIGN OUT ', e))
-  if (guard === 'owner') {
-    await remove(FOODCOURT_SELECTED)
-  }
   dispatch(logout())
 }
 

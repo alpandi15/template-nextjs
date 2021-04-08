@@ -31,7 +31,7 @@ export const logout = (guard) => {
   cookie.remove('session_table')
   window.localStorage.setItem(`logout_${guard}`, Date.now())
   if (guard === 'user') {
-    Router.push('/main')
+    Router.push('/auth/login')
   }
   if (guard === 'stand') {
     Router.push('/stand/auth/login')
@@ -160,7 +160,7 @@ export const isLogged = (ctx, guard) => {
   if (ctx.req && token) {
     let redirect
     if (guard === 'user') {
-      redirect = '/main'
+      redirect = '/home'
     }
     if (guard === 'owner') {
       redirect = '/owner/home'
@@ -180,7 +180,7 @@ export const isLogged = (ctx, guard) => {
   if (token) {
     let redirect
     if (guard === 'user') {
-      redirect = '/main'
+      redirect = '/home'
     }
     if (guard === 'owner') {
       redirect = '/owner/home'
