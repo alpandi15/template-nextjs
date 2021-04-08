@@ -11,7 +11,7 @@ const portHttp = config.serverPort
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({
   dev,
-  dir: `${__dirname}/src`,
+  dir: `${__dirname}`,
   xPoweredBy: false
 })
 const handle = app.getRequestHandler()
@@ -28,7 +28,7 @@ app.prepare()
         res.removeHeader('x-powered-by')
         next()
       })
-    
+
     routes(server, app)
 
     server
@@ -43,10 +43,10 @@ app.prepare()
           handle(req, res, req.url)
         }
       })
-    
+
     createServer(server).listen(portHttp, (err) => {
       if (err) throw err
       console.log(`> Ready on http://localhost:${portHttp}`)
     })
   })
-  .catch(error => console.log('Error on Server render: ', error))
+  .catch((error) => console.log('Error on Server render: ', error))

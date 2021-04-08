@@ -18,6 +18,7 @@ function getCacheKey (req) {
 
 export default async function renderAndCache (app, req, res, pagePath, queryParams) {
   const key = getCacheKey(req)
+
   // If we have a page in the cache, let's serve it
   if (!dev && ssrCache.has(key)) {
     res.setHeader('x-cache', 'HIT')
@@ -31,7 +32,7 @@ export default async function renderAndCache (app, req, res, pagePath, queryPara
       req, res, pagePath,
       queryParams ? req[queryParams] : { ...req.query, ...req.params }
     )
-    console.log('INI RENDERING ', html)
+    // console.log('INI RENDERING ', html)
     // Something is wrong with the request, let's skip the cache
     if (res.statusCode !== 200) {
       res.send(html)
@@ -44,6 +45,7 @@ export default async function renderAndCache (app, req, res, pagePath, queryPara
 
     res.setHeader('x-cache', 'MISS')
     res.send(html)
+    res.finished = true
   } catch (err) {
     app.renderError(err, req, res, pagePath, queryParams ? req[queryParams] : { ...req.query, ...req.params })
   }

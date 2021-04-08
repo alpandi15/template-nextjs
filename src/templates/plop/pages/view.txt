@@ -1,0 +1,114 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { getOne } from 'actions/{{name}}/{{camelCase name}}Action'
+import Layout from 'components/Owner/layout'
+import Image from 'components/Image'
+import { withAuthSync } from 'components/Security/auth'
+import { GUARD_OWNER } from 'constants'
+import CustomHelmet from 'components/CustomHelmet'
+import Breadcrumbs from 'components/Breadcrumbs'
+
+const defaultImgStand = '/Image/default-stand/512x512.png'
+
+const Detail{{properCase name}} = ({
+  title,
+  currentItem,
+  getOne
+}) => {
+  const router = useRouter()
+  React.useEffect(() => {
+    const fetch = async () => {
+      const { query } = router
+      if (query && query.uuid) await getOne(query.uuid, GUARD_OWNER)
+    }
+
+    fetch()
+  }, [getOne, router])
+
+  return (
+    <Layout>
+      <CustomHelmet title={currentItem && currentItem.name ? currentItem.name : title} />
+      <div className="owner-content">
+        <div className="header-title">
+          <div className="header-content">
+            <h5>Detail {{titleCase name}}</h5>
+          </div>
+        </div>
+        <Breadcrumbs />
+        <div className="content">
+          <div className="information-detail row">
+            <div className="title">Informasi {{titleCase name}}</div>
+            <div className="button">
+              <Link href={`/owner/{{camelCase name}}/edit/${currentItem.uuid}`}>
+                <a className="btn btn-light-smooth waves-effect waves-light bg-pimary">
+                  <i className="material-icons">create</i>
+                </a>
+              </Link>
+            </div>
+            <div className="col s12 m6 l6">
+              <div className="content">
+                <div className="data">
+                  <div className="lable">Nama {{properCase name}}</div>
+                  <div className="value">{currentItem && currentItem.name}</div>
+                </div>
+                <div className="data">
+                  <div className="lable">Kategori</div>
+                  <div className="value"></div>
+                </div>
+                <div className="data">
+                  <div className="lable">Deskripsi Stand</div>
+                  <div className="value">
+                    {currentItem && currentItem.description}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col s12 m6 l6">
+              <div className="content">
+                {
+                  currentItem && currentItem.image && currentItem.image.url && (
+                    <Image
+                      src={currentItem.image.url}
+                      className="user-image"
+                      alt="Profile"
+                      defaultsrc={defaultImgStand}
+                    />
+                  )
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  )
+}
+
+const mapStateToProps = (state) => {
+  const { standStore } = state
+  return {
+    loadingData: standStore.loading,
+    currentItem: standStore.currentItem
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getOne: (id, guard) => dispatch(getOne(id, guard))
+})
+
+Detail{{properCase name}}.defaultProps = {
+  title: 'Detail {{properCase name}}'
+}
+
+// initial props authenticated using guard users
+Detail{{properCase name}}.getInitialProps = () => {
+  return {
+    guard: 'owner'
+  }
+}
+
+export default withAuthSync(
+  connect(mapStateToProps, mapDispatchToProps)(Detail{{properCase name}})
+)

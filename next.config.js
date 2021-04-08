@@ -11,8 +11,10 @@ require('dotenv')
   })
 
 module.exports = {
+  devIndicators: {
+    autoPrerender: false
+  },
   poweredByHeader: false,
-  distDir: '../dist',
   env: {
     PORT_HTTPS: process.env.PORT_HTTPS || '7001',
     PORT_HTTP: process.env.PORT_HTTP || '7000',

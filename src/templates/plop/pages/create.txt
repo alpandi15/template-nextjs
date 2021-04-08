@@ -1,0 +1,119 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import {
+  Field,
+  reduxForm,
+  getFormValues
+} from 'redux-form'
+import { useRouter } from 'next/router'
+import { add } from 'actions/{{name}}/{{camelCase name}}Action'
+import Layout from 'components/Owner/layout'
+import TextInput from 'components/Form/Input'
+import { withAuthSync } from 'components/Security/auth'
+import { GUARD_OWNER, FOODCOURT_SELECTED } from 'constants'
+import CustomHelmet from 'components/CustomHelmet'
+import Breadcrumbs from 'components/Breadcrumbs'
+import { get } from 'services/utils/storage'
+import { toastify } from 'components/Toast/Toastify'
+import validate from './validate'
+
+const Create{{properCase name}} = ({
+  title,
+  invalid,
+  submitting,
+  handleSubmit,
+  add
+}) => {
+  const router = useRouter()
+
+  const onSubmit = async (values) => {
+    const foodCourtId = await get(FOODCOURT_SELECTED)
+    const result = await add({
+      name: values.name,
+      description: values.description,
+      foodCourtId
+    }, GUARD_OWNER)
+
+    if (result.success) {
+      toastify({
+        type: 'success',
+        message: result.meta.message
+      })
+      router.push('/owner/{{dashCase name}}')
+    } else {
+      toastify({
+        type: 'error',
+        message: result.message
+      })
+    }
+  }
+
+  return (
+    <Layout>
+      <CustomHelmet title={title} />
+      <div className="owner-content">
+        <div className="header-title">
+          <div className="header-content">
+            <h5>Buat {{titleCase name}}</h5>
+          </div>
+        </div>
+        <Breadcrumbs />
+        <div className="content">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-stand">
+              <div className="row">
+                <div className="col s12 m12 l6 stand">
+                  <div className="title-info">Informasi {{titleCase name}}</div>
+                  <Field
+                    id="name"
+                    name="name"
+                    label="Nama {{titleCase name}}"
+                    type="text"
+                    component={TextInput}
+                  />
+                  <div className="input-field col">
+                    <Field
+                      id="description"
+                      name="description"
+                      label="Deskripsi"
+                      type="text"
+                      component={TextInput}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button disabled={invalid || submitting} className="waves-effect waves-light btn btn-app bg-pimary">Simpan</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Layout>
+  )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    values: getFormValues('FormAdd{{properCase name}}Owner')(state)
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  add: (data, guard) => dispatch(add(data, guard))
+})
+
+Create{{properCase name}}.defaultProps = {
+  title: 'Create {{titleCase name}}'
+}
+
+// initial props authenticated using guard users
+Create{{properCase name}}.getInitialProps = () => {
+  return {
+    guard: 'owner'
+  }
+}
+
+export default withAuthSync(reduxForm({
+  form: 'FormAdd{{properCase name}}Owner',
+  validate
+})(connect(mapStateToProps, mapDispatchToProps)(Create{{properCase name}})))

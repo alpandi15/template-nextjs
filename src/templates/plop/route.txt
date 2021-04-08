@@ -1,0 +1,14 @@
+import express from 'express'
+import renderAndCache from '../../../utils/cache'
+
+const router = express.Router()
+
+const routes = (app) => {
+  return router
+    .get('/owner/{{snakeCase name}}', (req, res) => renderAndCache(app, req, res, '/owner-pages/{{camelCase name}}'))
+    .get('/owner/{{snakeCase name}}/create', (req, res) => renderAndCache(app, req, res, '/owner-pages/{{camelCase name}}/create'))
+    .get('/owner/{{snakeCase name}}/view/:uuid', (req, res) => renderAndCache(app, req, res, '/owner-pages/{{camelCase name}}/view'))
+    .get('/owner/{{snakeCase name}}/edit/:uuid', (req, res) => renderAndCache(app, req, res, '/owner-pages/{{camelCase name}}/edit'))
+}
+
+export default routes

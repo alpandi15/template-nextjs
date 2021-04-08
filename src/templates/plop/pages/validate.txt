@@ -1,0 +1,17 @@
+const validate = ({
+  description,
+  name
+}) => {
+  const error = {
+    name: !name ? '*Required'
+    : name.length < 3 ? 'Username Min 3 Character'
+    : undefined,
+    description: !description ? '*Required'
+    : description.length < 3 ? 'Name Min 3 Character'
+    : undefined
+  }
+
+  return error
+}
+
+export default validate

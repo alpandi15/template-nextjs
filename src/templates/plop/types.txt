@@ -1,0 +1,7 @@
+// {{constantCase name}}
+export const FETCH_{{constantCase name}} = 'FETCH_{{constantCase name}}'
+export const FAILED_{{constantCase name}} = 'FAILED_{{constantCase name}}'
+export const RECEIVE_{{constantCase name}} = 'RECEIVE_{{constantCase name}}'
+export const RECEIVE_ITEM_{{constantCase name}} = 'RECEIVE_ITEM_{{constantCase name}}'
+
+// GENERATED TYPES
